@@ -6,6 +6,7 @@ class DogsController{
 	}
 
 	public function actionFind(){
+		
 		Api::response(200, array('Get all dogs'));
 	}
 
