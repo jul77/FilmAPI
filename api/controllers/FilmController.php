@@ -25,10 +25,10 @@ class FilmController
 		}
 		else
 		{
-			Api::response(400,array('error' => 'mail or pasword missing'));
+			Api::response(400,array('error' => 'mail or password missing'));
 		}
 	}
-	
+
 	public function actionUpdateUser(){
 		if(isset($_POST['Umail']) && isset($_POST['Umdp']))
 		{
@@ -42,14 +42,21 @@ class FilmController
 		}
 	}
 
-	public function 
+	public function actionDeleteUser(){
+		if(isset($_POST['Dmail']))
+		{
+			$data = array('delete user with mail : '.$_POST['Dmail']);
+			$req = $base->supprUtil($_POST['Dmail']);
+			Api::response(200,$data);
+		}
+
+
+
+	}
 
 
 
 
 
 }
-
-
-
 ?>
