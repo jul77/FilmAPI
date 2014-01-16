@@ -11,7 +11,9 @@ $f3->config('api/configs/routes.ini');
 
 $f3->route('GET /',
 	function($f3) {
-		Api::response(404, 0);
+		$data = array('Nom' => 'Erbin',
+					  'Prénom' => 'Jules');
+		Api::response(404, $data);
 	}
 );
 
