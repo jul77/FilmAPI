@@ -1,6 +1,7 @@
 <?php
 class baseFilm
 {
+	private $db;
 	public function __construct(){
 		$this->db= new DB\SQL('mysql:host=localhost;port=3306;dbname=films','root','');
 	}
@@ -9,26 +10,31 @@ class baseFilm
 	public function allUsers()
 	{
 		$resultat=$this->db->query("select * from users");
+		$tableau=$resultat->fetchAll();
+		return $tableau;
 	}
 	public function creerUtil($mail,$mdp){
-		$resultat=$this->db->query("insert into users(mail,mdp) values(".$mail.",".$mdp.")");
+		$resultat=$this->db->query("insert into users(mail,mdp) values('".$mail."','".$mdp."')");
 	}
 
-	public function updateUtil($prevMail,$mail,$mdp){
-		$resultat=$this->bd->query("update users set mail = ".$mail."and mdp = ".$mdp." where mail=".$prevMail);
+	public function updateUtil($id,$mail,$mdp){
+		$resultat=$this->db->query("update users set mail='".$mail."',mdp='".$mdp."' where id_user=".$id);
 	}
 
 	public function supprUtil($id){
-		$resultat=$this->bd->query("delete from users where id=".$id);
+		$resultat=$this->db->query("delete from users where id_user=".$id);
 	}
 
 //Fonctions pour la table film
 	public function allFilms(){
-		$resultat=$this->bd->query("select titre from films");
+		$resultat=$this->db->query("select * from films");
+		$tableau=$resultat->fetchAll();
+		return $tableau;
 	}
 
 	public function ajoutFilm($titre,$date){
-		$resultat=$this->bd->query("insert into films(nom_film,date_sortie) values (".$titre.",".$date.")");
+		$resultat=$this->db->query("insert into films(nom_film,date_sortie) values ('".$titre."','".$date."'')");
+		print_r($resultat);exit;
 	}
 }
 ?>

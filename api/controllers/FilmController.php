@@ -1,5 +1,6 @@
 <?php
 require("C:/wamp/www/filmapi/api/components/bddQuery.php");
+require("C:/wamp/www/filmapi/api/components/Put.php");
 class FilmController
 {
 	private $base;
@@ -11,7 +12,6 @@ class FilmController
 		$data = $this->base->allUsers();
 		Api::response(200,$data);
 	}
-
 
 	public function actionCreateUser(){
 		$mail = F3::get("POST.userMAIL");
@@ -30,39 +30,44 @@ class FilmController
 	}
 
 	public function actionUpdateUser(){
-		if(isset($_POST['Umail']) && isset($_POST['Umdp']))
+		$id = F3::get('PARAMS.id');
+		$put = PUT::get();
+		$mail = $put['userMAIL'];
+		$mdp = md5($put['userMDP']);
+
+		if(isset($mail) && isset($mdp))
 		{
-			$data = array('update user with mail : '.$_POST['mail'].' and password : '.$_POST['mdp']);
-			$req = $base->creerUtil($_POST['mail'],$_POST['mdp']);
+			$data = array('update user with ID : ' => $id,
+							'new mail :' =>$mail,
+							'new pasword' => $mdp);
+			$req = $this->base->updateUtil($id,$mail,$mdp);
 			Api::response(200,$data);
 		}
 		else
 		{
-			Api::response(400,array('error' => 'mail or pasword missing'));
+			Api::response(400,array('error' => 'new mail or new pasword missing'));
 		}
 	}
 
 	public function actionDeleteUser(){
-		if(isset(/*$f3::get("PARAMS.id")*/$mail))
-		{
-			$data = array('delete user with mail : '.$_POST['Dmail']);
-			$req = $base->supprUtil($_POST['Dmail']);
+		$id=F3::get("PARAMS.id");
+			$data = array('ID deleted' => $id );
+			$req = $this->base->supprUtil($id);
 			Api::response(200,$data);
 		}
+
 //Fonctions pour la table film
 	public function actionAllFilms(){	
-		$data = $base->allFilms();
+		$data = $this->base->allFilms();
 		Api::response(200,$data);
 	}
-/*	public function actionOneFilm(){
-		if(isset($_POST['']))
-	}*/
 
-
-
+	public function actionCreateFilm(){
+		
 	}
-
-
+	public function actionOneFilm(){
+		
+	}
 
 
 
