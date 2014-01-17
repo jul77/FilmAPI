@@ -13,6 +13,7 @@ class baseFilm
 		$tableau=$resultat->fetchAll();
 		return $tableau;
 	}
+	
 	public function creerUtil($mail,$mdp){
 		$resultat=$this->db->query("insert into users(mail,mdp) values('".$mail."','".$mdp."')");
 	}
@@ -32,8 +33,8 @@ class baseFilm
 		return $tableau;
 	}
 
-	public function ajoutFilm($titre,$date){
-		$resultat=$this->db->query("insert into films(nom_film,date_sortie) values ('".$titre."','".$date."'')");
+	public function ajoutFilm($titre,$date,$resume){
+		$resultat=$this->db->query("insert into films(nom_film,date_sortie,resume) values ('".$titre."','".$date."','".$resume."')");
 		print_r($resultat);exit;
 	}
 }

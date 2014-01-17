@@ -63,7 +63,23 @@ class FilmController
 	}
 
 	public function actionCreateFilm(){
-		
+		$titre = F3::get("POST.titre");
+		$date = F3::get("POST.date");
+		$resume = F3::get("POST.resume");
+		if (isset($titre) && isset($date) && isset($resume))
+		{
+			$data = array("Title :" => $titre,
+							"Date :" =>$date,
+							"Resume :" =>$resume );
+			$req = $this->base->ajoutFilm($titre,$date,$resume);
+			Api::response(200,$data);
+		}
+
+		else
+		{
+			$date = array("Error" => "Title, date or resume is missing");
+			Api::response(400,$data);
+		}
 	}
 	public function actionOneFilm(){
 		
